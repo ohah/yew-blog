@@ -1,0 +1,132 @@
+
+@font-face {
+  font-family: 'yg-jalnan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'S-CoreDream-4Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body{font-family: 'Consolas, "Courier New", monospace'}
+h1, h2, h3, h4, h5, h6 {font-family: 'S-CoreDream-4Regular'}
+.yg-jalnan{font-family: 'yg-jalnan';}
+.S-CoreDream-4Regular{font-family: 'S-CoreDream-4Regular';}
+.minimize{animation: minimize 1.75s;overflow: hidden;animation-fill-mode: forwards;}
+.maximize{animation: maximize 0.45s;overflow: hidden;}
+.modalIn{animation: modalIn 0.45s;animation-fill-mode: forwards;}
+.dropdownIn{animation: dropdownIn 0.45s;animation-fill-mode: forwards;}
+.dropdownOut{animation: dropdownOut 0.45s;animation-fill-mode: forwards;}
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #48bb78;
+}
+.toast{animation: fadein 0.15s linear;}
+.toast-hide{animation: fadeout 0.15s linear;animation-fill-mode: forwards;}
+.error-message {
+  text-align: center;
+  color:white;  
+  opacity: 0;
+}
+
+@keyframes dropdownIn {
+  0% {
+    transform:scaleY(0);
+  }
+
+  100% {
+    transform:scaleY(1);
+  }
+
+}
+
+@keyframes dropdownOut {
+  0% {
+    transform:scaleY(1);
+  }
+
+  100% {
+    transform:scaleY(0);
+    display:none;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    transform:scaleY(0);
+  }
+
+  to {
+    transform:scaleY(1);
+  }
+}
+
+@keyframes minimize {
+  from {
+    transform:scaleY(1);
+    margin-top:2rem;
+  }
+
+  to {
+    transform:scaleY(0);
+    margin-top:-100%;
+    /* display:none; */
+  }
+}
+
+@keyframes maximize {
+  to {
+    transform:scaleY(1);
+    margin-top:2rem;
+  }
+
+  from {
+    transform:scaleY(0);
+    margin-top:-100%;
+    /* display:none; */
+  }
+
+}
+@keyframes fadein {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    transform: translateZ(0);
+  }
+}
+@keyframes fadeout {
+  0% {
+    transform: translateZ(0);
+  }
+  
+  100% {
+    transform: translate3d(130%, 0, 0);
+    display:none;
+  }
+}
+.view-prose h1,
+.view-prose h2,
+.view-prose h3,
+.view-prose h4,
+.view-prose h5,
+.view-prose h6 {
+  position: sticky;
+  background:#ffffff;
+  top:60px;
+  z-index: 30;
+}
+.dark .view-prose h1,
+.dark .view-prose h2,
+.dark .view-prose h3,
+.dark .view-prose h4,
+.dark .view-prose h5,
+.dark .view-prose h6 {
+  background:#1e094d;
+}

@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "prettier": "prettier --write ./src/**/*.rs"
+  },
+  "plugins": [
+    "./node_modules/prettier-plugin-rust"
+  ],
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/line-clamp": "^0.4.2",
+    "@tailwindcss/typography": "^0.5.7",
+    "prettier-plugin-rust": "^0.1.8",
+    "tailwind-scrollbar": "^2.0.1"
+  }
+}

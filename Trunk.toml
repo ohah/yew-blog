@@ -1,0 +1,17 @@
+[build]
+target = "index.html"
+dist = "dist"
+
+## "prettier --write src/**/*.{rs}"
+[[hooks]]
+stage = "build"
+command = "sh"
+command_arguments = ["-c", "tailwindcss -i tailwind.css -o src/style/index.css"]
+
+[watch]
+ignore = ["./node_modules"]
+
+[[proxy]]
+rewrite = "/api/"
+backend = "https://allthatnba.com/api/"
+## backend = "https://yew.rs/tutorial"

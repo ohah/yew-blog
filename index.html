@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ohah의 공간</title>
+  <link data-trunk href="./src/style/index.css" rel="css" />
+  <link data-trunk href="./src/style/custom.css" rel="css" />
+  <script src="https://allthatnba.com/tistory/dist/bundle.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/ohah/mvmEditor@master/src/css/editor.css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/vs2015.min.css">
+  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css"> -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.7.0/highlightjs-line-numbers.min.js"></script>
+  <script src="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.css"/>
+  <script>
+    hljs.addPlugin(
+      new CopyButtonPlugin({
+        callback: (text, el) => console.log("Copied to clipboard", text),
+      })
+    );
+  </script>
+  <!-- <script>hljs.highlightAll();</script> -->
+  <!-- <script>hljs.initLineNumbersOnLoad();</script> -->
+  <!-- <link data-trunk data-no-inline="module" type="js" href="./src/js/github.js" rel="inline" /> -->
+  <!-- <link data-trunk data-no-inline="module" type="js" href="./src/js/github.js" rel="inline" /> -->
+  <!-- <script data-trunk src="./src/vscode/dist/bundle.js" ></script> -->
+  <!-- <link data-trunk rel="inline" type="js" href="./src/vscode/dist/bundle.js" /> -->
+  <!-- <script type="module" src="https://cdn.skypack.dev/octokit"></script> -->
+  <!-- <script type="module">
+    import { Octokit, App } from "https://cdn.skypack.dev/octokit";
+    
+    console.log('되냐?');
+  </script> -->
+</head>
+<body class="scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+  <!-- <script data-trunk="module" type="module" src="./src/js/github.js"></script>
+  <script data-trunk="module" type="module" src="./github.js"></script> -->
+  <div data-trunk id="rust-yew-modal"></div>
+</body>
+</html>
