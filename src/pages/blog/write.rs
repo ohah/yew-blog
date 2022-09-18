@@ -8,6 +8,7 @@ use yew::{ function_component, html,  Callback, use_state, use_effect_with_deps,
 use yew_router::prelude::{ use_history, use_route };
 
 use crate::components::tag_input::TagInput;
+use crate::components::search_input::SearchInput;
 use crate::{router::root::{RootRoute}, store::{blog::{Blog, WritePayload }, toast::{ToastStatus}}};
 
 #[derive(Serialize, Deserialize)]
@@ -187,12 +188,16 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
         >
           { "카테고리" }
         </label>
-        <input 
-          id="category" 
-          onchange={category_changed}
-          value={payload.category.to_string()}
-          class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
+        <SearchInput 
+          list={vec!["Javascript".to_string(), "Typescript".to_string(), "Rust".to_string()]}
+          onchange={category_changed.clone()}
         />
+        // <input 
+        //   id="category" 
+        //   onchange={category_changed}
+        //   value={payload.category.to_string()}
+        //   class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
+        // />
       </div>
       <div class="flex-grow flex w-full">
         <div class="flex flex-col flex-auto overflow-hidden" id="content"></div>

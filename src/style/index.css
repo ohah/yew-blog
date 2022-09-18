@@ -2426,6 +2426,10 @@ select {
   z-index: 9999;
 }
 
+.z-\[100\] {
+  z-index: 100;
+}
+
 .z-\[3000\] {
   z-index: 3000;
 }
@@ -2693,6 +2697,10 @@ select {
 
 .max-h-\[700px\] {
   max-height: 700px;
+}
+
+.max-h-32 {
+  max-height: 8rem;
 }
 
 .min-h-screen {
@@ -4430,6 +4438,11 @@ select {
   --scrollbar-thumb: #111827 !important;
 }
 
+.last\:rounded-b:last-child {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
 .focus\:z-20:focus {
   z-index: 20;
 }
@@ -4760,6 +4773,11 @@ select {
 .dark .dark\:hover\:bg-slate-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:hover\:bg-neutral-900:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(23 23 23 / var(--tw-bg-opacity));
 }
 
 .dark .dark\:hover\:bg-slate-800:hover {
