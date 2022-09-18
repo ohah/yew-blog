@@ -82,7 +82,7 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
       let value = e.target().unwrap().unchecked_into::<HtmlTextAreaElement>().value();
       let mut data = payload.deref().clone();
       data.content = value;
-      log::info!("textarea : {:?}", data.content);
+      // log::info!("textarea : {:?}", data.content);
       payload.set(data);
     })
   };
