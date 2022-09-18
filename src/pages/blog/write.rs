@@ -192,12 +192,6 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
           list={vec!["Javascript".to_string(), "Typescript".to_string(), "Rust".to_string()]}
           onchange={category_changed.clone()}
         />
-        // <input 
-        //   id="category" 
-        //   onchange={category_changed}
-        //   value={payload.category.to_string()}
-        //   class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
-        // />
       </div>
       <div class="flex-grow flex w-full">
         <div class="flex flex-col flex-auto overflow-hidden" id="content"></div>
@@ -218,12 +212,6 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
         <TagInput 
           onchange={tag_changed}
         />
-        // <input 
-        //   id="tag" 
-        //   onchange={tag_changed}
-        //   value={payload.tag.to_string()}
-        //   class="hidden flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
-        // />
       </div>
       <div class="flex flex-none">
         <button 
