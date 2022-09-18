@@ -24,7 +24,8 @@ gloo = "0.8.0"
 log = "0.4.17"
 quad-rand = "0.2.1"
 comrak = "0.14"
-
+strip_markdown = "0.2.0"
+itertools = "0.10.4"
 
 ## yew-router = { git = "https://github.com/yewstack/yew", branch="master" }
 ## yew = { git = "https://github.com/yewstack/yew.git", features = ["csr"] }

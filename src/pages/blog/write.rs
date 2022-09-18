@@ -7,6 +7,7 @@ use web_sys::{FocusEvent, HtmlInputElement, HtmlTextAreaElement, Event};
 use yew::{ function_component, html,  Callback, use_state, use_effect_with_deps, Properties };
 use yew_router::prelude::{ use_history, use_route };
 
+use crate::components::tag_input::TagInput;
 use crate::{router::root::{RootRoute}, store::{blog::{Blog, WritePayload }, toast::{ToastStatus}}};
 
 #[derive(Serialize, Deserialize)]
@@ -209,12 +210,15 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
         >
           { "태그" }
         </label>
-        <input 
-          id="tag" 
+        <TagInput 
           onchange={tag_changed}
-          value={payload.tag.to_string()}
-          class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
         />
+        // <input 
+        //   id="tag" 
+        //   onchange={tag_changed}
+        //   value={payload.tag.to_string()}
+        //   class="hidden flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
+        // />
       </div>
       <div class="flex flex-none">
         <button 

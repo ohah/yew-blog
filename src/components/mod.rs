@@ -14,3 +14,4 @@ pub mod comment;
 pub mod comment_card;
 pub mod comment_write;
 pub mod comment_reply_card;
+pub mod tag_input;
