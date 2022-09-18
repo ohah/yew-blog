@@ -10,6 +10,7 @@ use super::{toast::ToastStatus, blog::Blog};
 struct Payload {
   code:String,
 	redirect_url:String,
+	env:String
 }
 
 #[derive(Default, Clone, PartialEq, Eq, Store, Serialize, Deserialize)]
@@ -82,13 +83,21 @@ impl GithubAuth {
 		let href = gloo_utils::window().location().pathname().unwrap();
   	let orgin = gloo_utils::window().location().origin().unwrap();
 		let redirect_url = format!("{}{}", orgin, href);
+		let env = if cfg!(debug_assertions) {
+			// 개발모드
+			"dev".to_string()
+		} else {
+			// 배포모드
+			"prod".to_string()
+		};
 		wasm_bindgen_futures::spawn_local(async move {
 			let response = Request::post("/api/Auth")
 				.header("accept", "applcation/json")
 				.header("Access-Control-Allow-Origin", "no-cors")
 				.json(&Payload{
 					code:code,
-					redirect_url: redirect_url
+					redirect_url: redirect_url,
+					env: env,
 				})
 				.expect("전송 오류")
 				.send()
