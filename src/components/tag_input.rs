@@ -1,120 +1,168 @@
 use wasm_bindgen::JsCast;
-use yew::{ html, function_component, Properties, Callback, use_state, UseStateHandle, use_state_eq, use_node_ref, use_effect_with_deps, use_effect };
-use web_sys::{KeyboardEvent, HtmlInputElement, MouseEvent, HtmlElement, Element};
+use yew::{ html, function_component, Properties, Callback,  UseStateHandle, use_state_eq, use_node_ref, use_effect_with_deps};
+use web_sys::{KeyboardEvent, HtmlInputElement, MouseEvent, };
 use itertools::Itertools;
 use web_sys::Event;
+
+use crate::store::{blog::Blog, toast::ToastStatus};
+
+#[derive(Properties, PartialEq)]
+pub struct TagProps {
+	pub default_value:Option<String>,
+	pub list:Vec<String>,
+	pub remove:Callback<usize>
+}
+
+#[function_component(Tag)]
+pub fn tag(props:&TagProps) -> Html {
+	fn remove(remove:Callback<usize>, i:usize) -> Callback<MouseEvent>{
+		Callback::from(move|e:MouseEvent| {
+			e.prevent_default();
+			remove.emit(i);
+		})
+	}
+	html! {
+		{
+			for props.list.iter().enumerate().map(|(i, _tag)| {
+				let _tag = _tag.clone();
+				let _remove = props.remove.clone();
+				html! {
+					<div
+						class="flex-none text-ellipsis text-xs overflow-hidden inline-flex bg-slate-200 text-gray-600 dark:bg-slate-600 dark:text-gray-100 inline-flex px-1 py-0.5 rounded gap-x-1 items-center" 
+						key={i}
+					> 
+						<span class="inline-flex">{_tag}</span>
+						<span 
+							class="cursor-pointer hover:text-black dark:hover:text-white inline-flex items-center"
+							onclick={remove(_remove, i)}
+						>
+							<i class="ri-close-fill"></i>
+						</span>
+					</div>
+				}
+			})
+		}
+	}
+
+}
+
 
 #[derive(Properties, PartialEq)]
 pub struct TagInputProps {
 	pub default_value:Option<String>,
-	pub onchange:Callback<Event>
+	pub onchange:Callback<String>
 }
 
 #[function_component(TagInput)]
-pub fn tag_input(props: &TagInputProps) -> Html {
-	let tag = use_state_eq(||vec![]);
+pub fn tag_input(TagInputProps { default_value, onchange }: &TagInputProps) -> Html {
+	let _default_value = default_value
+	.clone()
+	.unwrap_or_default()
+	.trim()
+	.split(",")
+	.map(|s| s.trim().to_string())
+	.collect::<Vec<String>>();
+	let tag = use_state_eq(||Vec::new());
 	let input_box = use_node_ref();
-	let keyup = {
+	{
+		let input_box = input_box.clone();
+		let default_value = default_value.clone();
+		let _default_value = _default_value.clone();
+		let tag = tag.clone();
+		use_effect_with_deps(move|default_value| {
+			if !default_value.clone().unwrap_or_default().is_empty() {
+				log::info!("_defalut_value : {:?}", _default_value);
+				tag.set(_default_value);
+				let input = input_box.cast::<HtmlInputElement>().expect("render을 가져오지 못함");
+				// input.set_value(default_value.clone().unwrap_or_default().as_str());
+				log::info!("defalut_value : {:?}", default_value);
+			}
+			|| ()
+		}, default_value.clone())
+	}
+
+	let keydown = {
+		let handle_onchange = onchange.clone();
 		let tag = tag.clone();
 		Callback::from(move |e:KeyboardEvent| {
-			e.prevent_default();
 			let input = e.target().unwrap().unchecked_into::<HtmlInputElement>();
-			let value = input.clone().value();
+			let value = input.clone().value().to_lowercase();
 			let key = e.key();
 			let key = key.as_str();
 			let tag = tag.clone();
-			if key == " " || key == "," {
-				// log::info!("태그 분리, {:?}", key);
-				// log::info!("state, {:?}", tag);
+			// log::info!("{:?}", key.clone());
+			if  key == "Backspace" && value.clone().is_empty() {
+				e.prevent_default();
 				let mut vec = tag.to_vec();
-				vec.push(value.replace(",", "").trim().to_string());
-				vec.dedup_by(|a, b| a == b);
-				let vec = vec.clone().into_iter().unique().collect();
-				tag.set(vec);
-				input.clone().focus();
-				log::info!("{:?}", input);
-				input.clone().set_value("");
-				gloo::timers::callback::Timeout::new(1000, move || {
-					log::info!("실행");
-					input.clone().focus();
-				})
-				.forget();
+				vec.remove(vec.len() - 1);
+				let set_vec = vec.clone().into_iter().unique().collect::<Vec<String>>();
+				tag.set(set_vec);
+				let emit = vec.clone().into_iter().unique().collect::<Vec<String>>().join(",");
+				handle_onchange.emit(emit);
+			} else if key == " " || key == "," || key == "Enter" {
+				e.prevent_default();
+				if tag.len() >= 5 {
+					Blog::toast_message("태그는 5개 이상 등록할 수 없습니다", ToastStatus::DANGER, None);
+				} else {
+					let mut vec = tag.clone().to_vec();
+					vec.push(value.replace(",", "").trim().to_string());
+					vec.dedup_by(|a, b| a == b);
+					let set_vec = vec.clone().into_iter().unique().collect::<Vec<String>>();
+					tag.set(set_vec);
+					let emit = vec.clone().into_iter().unique().collect::<Vec<String>>().join(",");
+					handle_onchange.emit(emit);
+					input.clone().set_value("");
+				}
 			}
 		})
 	};
-	// {
-	// 	let input = input.clone();
-	// 	use_effect(move || {
-	// 		let input = input.cast::<HtmlInputElement>().expect("rendering error");
-	// 		input.focus();
-	// 		log::info!("유즈이펙트");
-	// 		|| ()
-	// 	});ㅕ
-	// }
-	{
-		let input_box = input_box.clone();
-		use_effect_with_deps(move|(tag, input_box)| {
-			let input_box = input_box.clone();
-			let element = input_box.cast::<HtmlInputElement>().expect("render을 가져오지 못함");
-			log::info!("태그변경될때마다");
-			element.focus();
-			|| ()
-		}, (tag.clone(), input_box.clone()));
-	}
 
-	fn remove (tag:UseStateHandle<Vec<String>>, index:usize) -> Callback<MouseEvent> {
+	let input_onchange = {
+		let handle_onchange = onchange.clone();
+		Callback::from(move | event: Event | {
+			let value = event.target().unwrap().unchecked_into::<HtmlInputElement>().value();
+			handle_onchange.emit(value);
+		})
+	};
+
+	fn remove (tag:UseStateHandle<Vec<String>>, index:usize, handle_onchange:Callback<String>) -> Callback<MouseEvent> {
 		Callback::from(move|e:MouseEvent| {
 			e.prevent_default();
 			let mut vec = tag.to_vec();
 			vec.remove(index);
-			tag.set(vec);
+			let set_vec = vec.clone().into_iter().unique().collect::<Vec<String>>();
+			tag.set(set_vec);
+			let emit = vec.clone().into_iter().unique().collect::<Vec<String>>().join(",");
+			handle_onchange.clone().emit(emit);
 		})
 	}
 
-	let focus = {
-		let input_box = input_box.clone();
-		Callback::from(move |e:MouseEvent| {
-			log::info!("포카스 이벤트 실행");
-			input_box.cast::<HtmlInputElement>().expect("input 에러").focus();
+	let remove = {
+		let tag = tag.clone();
+		let handle_onchange = onchange.clone();
+		Callback::from(move|index|{
+			let mut vec = tag.to_vec();
+			vec.remove(index);
+			let set_vec = vec.clone().into_iter().unique().collect::<Vec<String>>();
+			tag.set(set_vec);
+			let emit = vec.clone().into_iter().unique().collect::<Vec<String>>().join(",");
+			handle_onchange.emit(emit);
 		})
 	};
-	// let remove= {
-	// 	let tag = tag.clone();
-	// 	Callback::from(move|e:MouseEvent| {
-	// 		let value = e.target().unwrap().unchecked_into::<HtmlElement>().get;
-	// 		let index = tag.iter().position(|x| *x == value).unwrap();
-	// 		let mut vec = tag.to_vec();
-	// 		vec.remove(index);
-	// 		tag.set(vec);
-	// 	})
-	// };
+
+	let tag = tag.clone().to_vec();
 	html! {
 		<div 
 			class="flex font-sans text-sm py-2 px-3 items-center w-full gap-x-1 dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 text-slate-500"
 		>
-			{
-				for tag.iter().enumerate().map(|(i, _tag)| {
-					let _tag = _tag.clone();
-					let tag = tag.clone();
-					html! {
-						<div
-							class="flex-none text-ellipsis text-xs overflow-hidden inline-flex bg-slate-200 text-gray-600 dark:bg-slate-600 dark:text-gray-100 inline-flex px-1 py-0.5 rounded gap-x-1 items-center" 
-							key={i}
-						> 
-							<span onclick={focus.clone()} class="inline-flex">{_tag}</span>
-							<span 
-								class="cursor-pointer hover:text-black dark:hover:text-white inline-flex items-center"
-								onclick={remove(tag, i)}
-							>
-								<i class="ri-close-fill"></i>
-							</span>
-						</div>
-					}
-				})
-			}
+			<Tag
+				list={tag.clone().to_vec()}
+				remove={remove}
+			/>
 			<input 
 				class="bg-transparent flex flex-grow ring-1 ring-slate-900/10 focus:outline-none flex flex-grow tag-input" 
-				onkeyup={keyup}
+				onkeydown={keydown}
+				onchange={input_onchange}
 				ref={input_box}
 			/>
 		</div>
