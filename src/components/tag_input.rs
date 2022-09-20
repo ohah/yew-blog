@@ -71,11 +71,7 @@ pub fn tag_input(TagInputProps { default_value, onchange }: &TagInputProps) -> H
 		let tag = tag.clone();
 		use_effect_with_deps(move|default_value| {
 			if !default_value.clone().unwrap_or_default().is_empty() {
-				log::info!("_defalut_value : {:?}", _default_value);
 				tag.set(_default_value);
-				let input = input_box.cast::<HtmlInputElement>().expect("render을 가져오지 못함");
-				// input.set_value(default_value.clone().unwrap_or_default().as_str());
-				log::info!("defalut_value : {:?}", default_value);
 			}
 			|| ()
 		}, default_value.clone())
