@@ -1,6 +1,6 @@
 let editor;
 export async function editor_init(element, value = '') {
-  const theme = JSON.parse(localStorage.getItem("theme")).color === "dark" ? "dark" : "";
+  const theme = localStorage.getItem("theme") && JSON.parse(localStorage.getItem("theme")).color === "dark" ? "dark" : "";
   console.log(theme);
   editor = await new VSCode({
     element : element,
@@ -8,7 +8,7 @@ export async function editor_init(element, value = '') {
     height:`${document.querySelector(element).getBoundingClientRect().height - 27}px`,
     // height:`500px`,
     // markdownStyle : `github-${theme}`,
-    markdownStyle: `github${theme === "" ? "" : `-${theme}`}`,
+    markdownStyle: `github${theme === "" ? "-light" : `-${theme}`}`,
     preview: true,
     path: "https://cdn.jsdelivr.net/gh/ohah/mvmEditor@master/src/",
     imageUpload : function (files) {

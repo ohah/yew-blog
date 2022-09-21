@@ -1,4 +1,5 @@
 {
+  "name": "blog",
   "scripts": {
     "prettier": "prettier --write ./src/**/*.rs"
   },

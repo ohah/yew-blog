@@ -7,6 +7,8 @@ use web_sys::{FocusEvent, HtmlInputElement, HtmlTextAreaElement, Event};
 use yew::{ function_component, html,  Callback, use_state, use_effect_with_deps, Properties };
 use yew_router::prelude::{ use_history, use_route };
 
+use crate::components::tag_input::TagInput;
+use crate::components::category_input::CategoryInput;
 use crate::{router::root::{RootRoute}, store::{blog::{Blog, WritePayload }, toast::{ToastStatus}}};
 
 #[derive(Serialize, Deserialize)]
@@ -67,8 +69,8 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
 
   let category_changed = {
     let payload = payload.clone();
-    Callback::from(move|e:Event| {
-      let value = e.target().unwrap().unchecked_into::<HtmlInputElement>().value();
+    Callback::from(move|value| {
+      // log::info!("{:?}", value);
       let mut data = payload.deref().clone();
       data.category = value;
       payload.set(data);
@@ -81,15 +83,15 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
       let value = e.target().unwrap().unchecked_into::<HtmlTextAreaElement>().value();
       let mut data = payload.deref().clone();
       data.content = value;
-      log::info!("textarea : {:?}", data.content);
+      // log::info!("textarea : {:?}", data.content);
       payload.set(data);
     })
   };
 
   let tag_changed = {
     let payload = payload.clone();
-    Callback::from(move|e:Event| {
-      let value = e.target().unwrap().unchecked_into::<HtmlInputElement>().value();
+    Callback::from(move|value| {
+      // log::info!("tag_changed {:?}", value);
       let mut data = payload.deref().clone();
       data.tag = value;
       payload.set(data);
@@ -117,7 +119,7 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
           .await
           .unwrap();
 
-          log::info!("id {:?}", fetched_list);
+          // log::info!("id {:?}", fetched_list);
           let mut data = payload.deref().clone();
 
           data.category = fetched_list.category;
@@ -144,6 +146,8 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
       e.prevent_default();
       if payload.title.is_empty() {
         Blog::toast_message("제목을 입력하세요", ToastStatus::DANGER, None);
+      } else if payload.category.is_empty() {
+        Blog::toast_message("카테고리르", ToastStatus::DANGER, None);
       } else if payload.content.is_empty() {
         Blog::toast_message("내용을 입력하세요", ToastStatus::DANGER, None);
       } else if payload.tag.is_empty() {
@@ -186,11 +190,9 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
         >
           { "카테고리" }
         </label>
-        <input 
-          id="category" 
-          onchange={category_changed}
-          value={payload.category.to_string()}
-          class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
+        <CategoryInput 
+          onchange={category_changed.clone()}
+          default_value={payload.category.to_string()}
         />
       </div>
       <div class="flex-grow flex w-full">
@@ -209,11 +211,9 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
         >
           { "태그" }
         </label>
-        <input 
-          id="tag" 
+        <TagInput 
           onchange={tag_changed}
-          value={payload.tag.to_string()}
-          class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none" 
+          default_value={payload.tag.to_string()}
         />
       </div>
       <div class="flex flex-none">

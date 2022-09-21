@@ -4,6 +4,8 @@ use yew::{ html, Properties, function_component, classes, Html };
 use crate::router::root::RootRoute;
 use yew_router::{components::Link};
 
+extern crate strip_markdown;
+use strip_markdown::*;
 #[derive( Clone, PartialEq, Deserialize, Debug, Default, Properties)]
 pub struct LatestProps {
 	#[serde(rename="createdAt")]
@@ -40,7 +42,7 @@ pub fn latset_card(LatestProps { title,seo_title,tag,created_at,updated_at,descr
 						<img class="rounded-full w-5 h-5" src={avatar_url.clone()} />
 					</div>
 				</div>
-				<div class="overflow-hidden line-clamp-5 flex-grow"> { description } </div>
+				<div class="overflow-hidden line-clamp-5 flex-grow whitespace-pre-line leading-[18px]"> { strip_markdown(&description).trim() } </div>
 				<div class="flex flex-wrap gap-y-[5px] gap-x-[5px]">
 				{
 					tag.map(|row| {

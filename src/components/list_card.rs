@@ -4,6 +4,9 @@ use yew::{ html, Properties, function_component, classes, Html };
 use crate::router::root::RootRoute;
 use yew_router::{components::Link};
 
+extern crate strip_markdown;
+use strip_markdown::*;
+
 #[derive(Serialize, Deserialize, Clone, Properties, PartialEq, Default, Debug)]
 pub struct Datas {
   pub category:String,
@@ -45,7 +48,7 @@ pub fn list_card(Datas {category,content,id, title,seo_title,tag,created_at,upda
 						<img class="rounded-full w-5 h-5" src={avatar_url.clone()} />
 					</div>
 				</div>
-				<div class="overflow-hidden line-clamp-5 flex-grow"> { description } </div>
+				<div class="overflow-hidden line-clamp-5 flex-grow whitespace-pre-line leading-[18px]"> { strip_markdown(&description).trim() } </div>
 				<div class="flex flex-wrap gap-y-[5px] gap-x-[5px]">
 				{
 					tag.map(|row| {
