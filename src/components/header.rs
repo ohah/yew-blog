@@ -1,7 +1,9 @@
 use web_sys::MouseEvent;
-use yew::{ function_component, html, classes, Callback, use_state };
+use yew::{ function_component, html, classes, Callback, use_state, Children};
 use yew_router::{components::Link, prelude::{use_history, History}};
-use crate::{router::root::{RootRoute, WriteRoute}, store::{github_auth::{GithubUser, GithubAuth}, blog::Blog}};
+use crate::{router::root::{RootRoute, WriteRoute}, store::{github_auth::{GithubUser, GithubAuth}, blog::Blog}, components::dropdown::{DropdownChildren, Button, Parent}};
+use crate::components::dropdown::Dropdown;
+use crate::components::transition::Transition;
 use crate::store::toast::ToastStatus;
 use yewdux::prelude::{use_store, Dispatch};
 
@@ -20,22 +22,8 @@ pub fn header() -> Html {
 	let (_, dispatch) = use_store::<Theme>();
 	let (user_state, _) = use_store::<GithubUser>();
   let is_login = use_state(|| false);
-  let dropdown = use_state(|| "close".to_owned());
-  let dropdown_animation = use_state(|| "hidden".to_owned());
-  let dropdown_toggle = {
-    let dropdown_animation = dropdown_animation.clone();
-    let dropdown = dropdown.clone();
-    Callback::from(move |e:MouseEvent| {
-      e.prevent_default();
-      if *dropdown == "close".to_owned() {
-        dropdown_animation.set("dropdownIn".to_string());
-        dropdown.set("open".to_owned());
-      } else if *dropdown == "open".to_owned() {
-        dropdown_animation.set("dropdownOut".to_string());
-        dropdown.set("close".to_owned());
-      }
-    })    
-  };
+  let dropdown = use_state(||false);
+  let _dropdown = use_state(||false);
 
   let toggle_login_modal = {
     let is_login = is_login.clone();
@@ -48,22 +36,18 @@ pub fn header() -> Html {
   let write = {
     let dropdown = dropdown.clone();
     let history = use_history().unwrap();
-    let dropdown_animation = dropdown_animation.clone();
     Callback::from(move |e:MouseEvent| {
       e.prevent_default();
-      dropdown.set("close".to_owned());
-      dropdown_animation.set("dropdownOut".to_string());
+      dropdown.set(false);
       history.push(WriteRoute::Write);
     })
   };
 
   let dropdown_close = {
     let dropdown = dropdown.clone();
-    let dropdown_animation = dropdown_animation.clone();
     Callback::from(move |e:MouseEvent| {
       e.prevent_default();
-      dropdown.set("close".to_owned());
-      dropdown_animation.set("dropdownOut".to_string());
+      dropdown.set(false);
     })
   };
 
@@ -81,6 +65,8 @@ pub fn header() -> Html {
       Blog::toast_message("dasd", ToastStatus::SUCCESS, None);
     })
   };
+
+  let tshow = use_state(||false);
 	html! {
     <header class="dark:bg-gradient-to-r from-[#1a0540] to-[#200a51] bg-white h-[60px] flex items-center border-b shadow-b dark:border-slate-500/60 sticky top-0 left-0 z-[9999]">
       <div class="flex justify-between align-center w-full lg:max-w-screen-lg m-auto items-center">
@@ -111,45 +97,61 @@ pub fn header() -> Html {
               <div class="relative inline-flex justify-center items-center text-left">
                 <button
                   class="text-2xl group w-6 h-6"
-                  onclick={dropdown_toggle}
+                  onclick={
+                    let dropdown = dropdown.clone();
+                    Callback::from(move|e:MouseEvent|{
+                      e.prevent_default();
+                      dropdown.set(!*dropdown);
+                    })
+                  }
                 >
                   <img 
                     class="w-full h-full rounded-full"
                     src={format!("{}", user_state.avatar_url)} 
                   />
                 </button>
-                <div class={format!("origin-top-right absolute top-7 right-0 mt-2 w-36 rounded-md shadow-lg bg-white dark:bg-slate-800 dark:shadow-none shadow dark:text-slate-300 text-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none {}", *dropdown_animation)} tabindex="-1">
-                  <div class="py-1 divide-y-2 dark:divide-slate-700">                    
-                    <button 
-                      class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1"
-                      onclick={write}
-                    >
-                      <i class="ri-edit-box-line"></i>
-                      <span>{"글 쓰기"}</span>
-                    </button>
-                    <div
-                      onclick={dropdown_close}
-                    >
-                      <Link<RootRoute> to={RootRoute::MyPageList { page : 1} }>
-                        <button class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1">
-                          <i class="ri-list-unordered"></i>
-                          <span>{"내가 쓴 글"}</span>
-                        </button>
-                      </Link<RootRoute>>
+                <Transition 
+                  show={*dropdown}
+                  enter="transition ease-in-out duration-300 transform"
+                  enter_from="scale-y-0"
+                  enter_to="scale-1"
+                  leave="transition ease-in-out duration-300 transform"
+                  leave_from="scale-y-1"
+                  leave_to="scale-y-0"
+                >
+                  <div class="origin-top-right absolute top-5 right-0 w-36 rounded-md shadow-lg bg-white dark:bg-slate-800 dark:shadow-none shadow dark:text-slate-300 text-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none" tabindex="-1">
+                    <div class="py-1 divide-y-2 dark:divide-slate-700">
+                      <button 
+                        class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1"
+                        onclick={write}
+                      >
+                        <i class="ri-edit-box-line"></i>
+                        <span>{"글 쓰기"}</span>
+                      </button>
+                      <div
+                        onclick={dropdown_close}
+                      >
+                        <Link<RootRoute> to={RootRoute::MyPageList { page : 1} }>
+                          <button class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1">
+                            <i class="ri-list-unordered"></i>
+                            <span>{"내가 쓴 글"}</span>
+                          </button>
+                        </Link<RootRoute>>
+                      </div>
+                      <button class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1">
+                        <i class="ri-message-2-line"></i>
+                        <span>{"내가 쓴 댓글"}</span>
+                      </button>
+                      <button 
+                        class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1"
+                        onclick={logout}
+                      >
+                        <i class="ri-logout-box-r-line"></i>
+                        <span>{"로그아웃"}</span>
+                      </button>
                     </div>
-                    <button class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1">
-                      <i class="ri-message-2-line"></i>
-                      <span>{"내가 쓴 댓글"}</span>
-                    </button>
-                    <button 
-                      class="flex w-full dark:hover:bg-slate-900 hover:bg-gray-200 text-left px-4 py-2 text-sm space-x-2" tabindex="-1"
-                      onclick={logout}
-                    >
-                      <i class="ri-logout-box-r-line"></i>
-                      <span>{"로그아웃"}</span>
-                    </button>
                   </div>
-                </div>
+                </Transition>
               </div>
             }
             <button
@@ -157,12 +159,61 @@ pub fn header() -> Html {
             >
               <a href="https://github.com/ohah/" target="_blank"><i class="hover:text-slate-700 dark:hover:text-slate-200 ri-github-fill"></i></a>
             </button>
-            // <button
-            //   class="text-2xl group px-2"
-            //   onclick={alert}
-            // >
-            //   {"경고!"}
-            // </button>
+            <Dropdown<Parent>>
+              <Dropdown<Button>> 
+                <div>{"Test"}</div>
+              </Dropdown<Button>>
+              <Dropdown<Button>> 
+                <div>{"Test2"}</div>
+              </Dropdown<Button>>
+              // <div> {"그냥"} </div>
+              // <Transition 
+              //   enter="transition ease-in-out duration-300 transform"
+              //   enter_from="scale-y-0"
+              //   enter_to="scale-1"
+              //   leave="transition ease-in-out duration-300 transform"
+              //   leave_from="scale-y-1"
+              //   leave_to="scale-y-0"
+              // >
+              //   <div>
+              //     <input 
+              //       autofocus={true}
+              //       class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none"
+              //       value="끼야으아"
+              //     />
+              //   </div>
+              // </Transition>
+            </Dropdown<Parent>>
+            // <Dropdown>
+            //   <div> {"왔냐~"} </div>
+            //   <div> {"씪빵이다"} </div>
+            // </Dropdown>
+            // <Dropdown<String>>
+            //   <div> {"무야호"} </div>
+            //   <Transition 
+            //     show={*_dropdown}
+            //     enter="transition ease-in-out duration-300 transform"
+            //     enter_from="scale-y-0"
+            //     enter_to="scale-1"
+            //     leave="transition ease-in-out duration-300 transform"
+            //     leave_from="scale-y-1"
+            //     leave_to="scale-y-0"
+            //   >
+            //     <div>
+            //       <input 
+            //         autofocus={true}
+            //         class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none"
+            //         value="끼야으아"
+            //       />
+            //     </div>
+            //   </Transition>
+            // </Dropdown<String>>
+            <button
+              class="text-2xl group px-2"
+              onclick={alert}
+            >
+              {"경고!"}
+            </button>
             <button 
               class="text-2xl group px-2"
               onclick={dispatch.apply_callback(|_| ThemeConfig::Toggle)}>
