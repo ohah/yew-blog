@@ -10,79 +10,101 @@ use super::transition::Transition;
 #[derive(Clone, derive_more::From, PartialEq, Debug)]
 pub enum DropdownChildren {
 	Transition(VChild<Transition>),
-	Button(VChild<Dropdown<Button>>),
+	// Button(VChild<Dropdown<Button>>),
+	// Body(VChild<Dropdown<Body>>),
 	// DropdownParent(ChildrenWithProps<Dropdown<Parent>>),
 	Children(VNode)
 }
 
+pub enum Attr {
+	Button,
+	Body,
+	Children, 
+	Parent
+}
+
+impl Attr {
+	fn as_str(&self) -> &'static str {
+		match self {
+			Attr::Button => "Button",
+			Attr::Body => "Body",
+			Attr::Children => "Children",
+			Attr::Parent => "Parent"
+		}
+	}
+}
 impl DropdownChildren {
-	pub fn is_button(&self) -> bool {
-		match self {
-			Self::Button(child) => true,
-			_ => false,
-		}
-	}
-	pub fn is_transition(&self) -> bool {
-		match self {
-			Self::Transition(child) => true,
-			_ => false,
-		}
-	}
-	pub fn is_children(&self) -> bool {
-		match self {
-			Self::Children(child) => true,
-			_ => false,
-		}
-	}
+	// pub fn is_button(&self) -> bool {
+	// 	match self {
+	// 		Self::Button(child) => true,
+	// 		_ => false,
+	// 	}
+	// }
+	// pub fn is_transition(&self) -> bool {
+	// 	match self {
+	// 		Self::Transition(child) => true,
+	// 		_ => false,
+	// 	}
+	// }
+	// pub fn is_children(&self) -> bool {
+	// 	match self {
+	// 		Self::Children(child) => true,
+	// 		_ => false,
+	// 	}
+	// }
+	// pub fn is_body(&self) -> bool {
+	// 	match self {
+	// 		Self::Body(child) => true,
+	// 		_ => false,
+	// 	}
+	// }
 }
 
 #[allow(clippy::from_over_into)]
 impl Into<Html> for DropdownChildren {
 	fn into(self) -> Html {
 		match self {
-			Self::Button(child) => child.into(),
-			Self::Transition(child) => html!{
-				<Transition 
-					enter="transition ease-in-out duration-300 transform"
-					enter_from="scale-y-0"
-					enter_to="scale-1"
-					leave="transition ease-in-out duration-300 transform"
-					leave_from="scale-y-1"
-					leave_to="scale-y-0"
-				>
-					<div> {"음?"} </div>
-				</Transition>
-			},
+			// Self::Button(child) => child.into(),
+			// Self::Body(child) => child.into(),
+			Self::Transition(child) => child.into(),
 			// child.into(),
 			Self::Children(child) => child.into(),
-			// Self::DropdownParent(child) => child.into(),
 		}
 	}
 
 }
 
-pub type Button = bool;
-pub type Parent = bool;
+pub type Parent = usize;
+pub type Button = u8;
+pub type Body = u16;
 
 #[derive(Clone, Properties, PartialEq)]
-pub struct DropdownProps<T> where T:PartialEq, {
+// pub struct DropdownProps<T> where T:PartialEq, {
+pub struct DropdownProps {
 	#[prop_or_default]
-	pub children: ChildrenRenderer<DropdownChildren>,
-	pub is_active: Option<T>,
+	// pub children: ChildrenRenderer<DropdownChildren>,
+	pub children: Children,
+	pub header: Html,
+	// pub is_active: Option<T>,
 }
 
 
 pub fn type_of<T>(_: T) -> &'static str {
-	std::any::type_name::<T>()
+	let typename = std::any::type_name::<T>();
+	match typename {
+		"&core::option::Option<u8>" => "Button",
+		"&core::option::Option<u18>" => "Body",
+		_ => "Parent"
+	}
 }
 
 #[function_component(Dropdown)]
-pub fn dropdown<T>(DropdownProps { children, is_active }: &DropdownProps<T>) -> Html where T: PartialEq + Display{
+// pub fn dropdown<T>(DropdownProps { children, is_active }: &DropdownProps<T>) -> Html where T: PartialEq + Display{
+pub fn dropdown(DropdownProps {children, header }: &DropdownProps) -> Html {
 	let show = use_state(||false);
 	// let is_active = is_active.as_ref();
-	let sex:Parent = true;
-	let _type = type_of(sex);
-	log::info!("{:?}", _type);
+	// let attr = type_of(is_active);
+	// log::info!("{:?}", attr);
 	// let button = children.clone().into_iter().filter(|item| item.clone().is_button());
 	// children.clone().into_iter().filter(|item| item.clone().is_transition()).map(|mut item| {
 	// 	// item.props
@@ -93,52 +115,26 @@ pub fn dropdown<T>(DropdownProps { children, is_active }: &DropdownProps<T>) -> 
 			show.set(!*show);
 		})
 	};
-	// log::info!("{:?}", button);
+	let button_children = children.iter().filter(|row| {
+		log::info!("row {:?}", row);
+		true
+	});
+	// log::info!("button_children {:?}", button_children);
 	html! {
 		<div>
-			{for children.iter().map(|row|{
-				if row.clone().is_button() {
-					html!{<>{row}</>}
-				} else {
-					html!{<> </>}
-				}
-			})}
-			// <div 
-			// 	onclick={toggle}
-			// >
-				// {
-				// 	for children.clone().iter().filter(|item| item.clone().is_button()).map(|item| {
-				// 		html! {
-				// 			<div> {item.clone()} </div>
-				// 		}
-				// 		// item
-				// 	})
-				// }
-			// </div>
-			// {				
-			// 	for children.clone().into_iter().filter(|item| item.clone().is_transition()).map(|mut item| {
-					// let item = item as VChild<Transition>;
-					// let mut props = Rc::make_mut(&mut item.props);
-					// props.show = show;
-			// 		item
-			// 	})
-			// }
-			// if *show == true {
-				// {
-				// 	for children.clone().into_iter().filter(|item| item.clone().is_children()).map(|item| {
-				// 		item
-				// 	})
-				// }
-			// }
-			// <div class={format!("origin-top-right absolute top-7 right-0 mt-2 w-36 rounded-md shadow-lg bg-white dark:bg-slate-800 dark:shadow-none shadow dark:text-slate-300 text-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none {}", "")}>
-				// { 
-				// 	for children.iter().map(|mut item| {
-				// 		let mut props = Rc::make_mut(&mut item.props);
-				// 		props.value = format!("item-{}", props.value);
-				// 		item
-				// 	})
-				// }	
-			// </div>
+
+			<div onclick={toggle}>{header.clone()}</div>
+			// {for children.iter()}
+			<div class={format!("origin-top-right absolute top-7 right-0 mt-2 w-36 rounded-md shadow-lg bg-white dark:bg-slate-800 dark:shadow-none shadow dark:text-slate-300 text-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none {}", "")}>
+				{ 
+					for children.iter().map(|mut item| {
+						// let mut props = Rc::make_mut(&mut item);
+						{log::info!("{:?}", item)}
+						// props.value = format!("item-{}", props.value);
+						item
+					})
+				}	
+			</div>
 		</div>
 	}
 }

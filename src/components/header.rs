@@ -159,31 +159,32 @@ pub fn header() -> Html {
             >
               <a href="https://github.com/ohah/" target="_blank"><i class="hover:text-slate-700 dark:hover:text-slate-200 ri-github-fill"></i></a>
             </button>
-            <Dropdown<Parent>>
-              <Dropdown<Button>> 
-                <div>{"Test"}</div>
-              </Dropdown<Button>>
-              <Dropdown<Button>> 
-                <div>{"Test2"}</div>
-              </Dropdown<Button>>
-              // <div> {"그냥"} </div>
-              // <Transition 
-              //   enter="transition ease-in-out duration-300 transform"
-              //   enter_from="scale-y-0"
-              //   enter_to="scale-1"
-              //   leave="transition ease-in-out duration-300 transform"
-              //   leave_from="scale-y-1"
-              //   leave_to="scale-y-0"
-              // >
-              //   <div>
-              //     <input 
-              //       autofocus={true}
-              //       class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none"
-              //       value="끼야으아"
-              //     />
-              //   </div>
-              // </Transition>
-            </Dropdown<Parent>>
+            <Dropdown
+              header={
+                let html = html!{
+                  <div> {"버튼"} </div>
+                };
+                html
+              }
+            >
+              <div> {"adf"} </div>
+              <Transition 
+                enter="transition ease-in-out duration-300 transform"
+                enter_from="scale-y-0"
+                enter_to="scale-1"
+                leave="transition ease-in-out duration-300 transform"
+                leave_from="scale-y-1"
+                leave_to="scale-y-0"
+              >
+                <div>
+                  <input 
+                    autofocus={true}
+                    class="flex flex-grow font-sans block text-sm w-full py-2 px-3 ring-1 ring-slate-900/10 text-slate-500 rounded-lg dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 focus:outline-none"
+                    value="끼야으아"
+                  />
+                </div>
+              </Transition>
+            </Dropdown>
             // <Dropdown>
             //   <div> {"왔냐~"} </div>
             //   <div> {"씪빵이다"} </div>
@@ -230,7 +231,17 @@ pub fn header() -> Html {
         <Modal
           is_close={toggle_login_modal.clone()}
         >
-          <GitHubLogin />
+          <Transition 
+          show={*is_login}
+          enter="transition ease-in-out duration-300 transform"
+          enter_from="scale-y-0"
+          enter_to="scale-1"
+          leave="transition ease-in-out duration-300 transform"
+          leave_from="scale-y-1"
+          leave_to="scale-y-0"
+          >
+            <GitHubLogin />
+          </Transition>
         </Modal>
       }
     </header>
