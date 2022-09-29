@@ -16,7 +16,7 @@ pub struct Parameter {
   id:i32,
 }
 
-#[derive(Default, Clone)]
+#[derive(Default, Clone, Debug)]
 pub struct Data {
   pub content:String,
 	pub tag:String,	
@@ -70,7 +70,7 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
   let category_changed = {
     let payload = payload.clone();
     Callback::from(move|value| {
-      // log::info!("{:?}", value);
+      log::info!("{:?}", value);
       let mut data = payload.deref().clone();
       data.category = value;
       payload.set(data);
@@ -147,7 +147,7 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
       if payload.title.is_empty() {
         Blog::toast_message("제목을 입력하세요", ToastStatus::DANGER, None);
       } else if payload.category.is_empty() {
-        Blog::toast_message("카테고리르", ToastStatus::DANGER, None);
+        Blog::toast_message("카테고리를 입력하세요", ToastStatus::DANGER, None);
       } else if payload.content.is_empty() {
         Blog::toast_message("내용을 입력하세요", ToastStatus::DANGER, None);
       } else if payload.tag.is_empty() {
