@@ -2,7 +2,7 @@ use web_sys::MouseEvent;
 use regex::Regex;
 use yew::{ html, html::{ChildrenRenderer}, create_portal, function_component, Children, Properties, html_nested, virtual_dom::{VChild, VNode}, Html, use_state, Callback, UseStateHandle, use_effect_with_deps, classes };
 
-#[derive(Properties, PartialEq)]
+#[derive(Clone, PartialEq, Properties)]
 pub struct TransitionProps {
 	pub show:Option<bool>,
 	#[prop_or_default]
