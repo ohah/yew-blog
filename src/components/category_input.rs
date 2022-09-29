@@ -69,12 +69,14 @@ pub fn category_input(CategoryInputProps { default_value, onchange}: &CategoryIn
 	let select = {
 		let select_input = select_input.clone();
 		let dropdown = dropdown.clone();
+		let onchange = onchange.clone();
 		Callback::from(move |e:MouseEvent| {
 			e.prevent_default();
 			let target = e.target().unwrap().unchecked_into::<HtmlElement>();
 			let value = target.text_content().unwrap_or_default();
 			let input = select_input.cast::<HtmlInputElement>().expect("render을 가져오지 못함");
 			input.set_value(value.as_str());
+			onchange.emit(value.clone());
 			dropdown.set(false);
 		})
 	};
