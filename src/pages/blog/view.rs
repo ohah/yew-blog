@@ -2,7 +2,7 @@ use web_sys::{Element, MouseEvent};
 use gloo_net::http::Request;
 use wasm_bindgen::prelude::{wasm_bindgen};
 use yew::{ function_component, html, Properties, use_state, use_effect_with_deps,use_node_ref, Html, Callback };
-use comrak::{markdown_to_html, ComrakOptions};
+use comrak::{markdown_to_html, ComrakOptions, plugins::syntect::SyntectAdapter, markdown_to_html_with_plugins, ComrakPlugins};
 use yewdux::prelude::{use_store};
 use crate::{components::list_card::Datas, store::{toast::{ToastStatus}, github_auth::GithubUser, blog::{Blog, DeletePayload}}, router::root::RootRoute, components::comment::Comment};
 use crate::{router::root::{WriteRoute}};
@@ -43,7 +43,16 @@ pub fn view(ViewProps{ seo_title }:&ViewProps) -> Html {
           Ok(fetched_list) => {
             views.set(fetched_list.clone());
             let render = render.cast::<Element>().expect("render을 가져오지 못함");
-            let text = markdown_to_html(fetched_list.content.as_str(), &ComrakOptions::default());
+            let mut options = ComrakOptions::default();
+            options.extension.superscript = true;
+            options.extension.autolink = true;
+            options.extension.table = true;
+            options.extension.tasklist = true;
+            let text = markdown_to_html(fetched_list.content.as_str(), &options);
+            // let adapter = SyntectAdapter::new("base16-ocean.dark");
+            // let mut plugins = ComrakPlugins::default();
+            // plugins.render.codefence_syntax_highlighter = Some(&adapter);
+            // let text = markdown_to_html_with_plugins(fetched_list.content.as_str(), &options, &plugins);
             render.set_inner_html(text.as_str());
             highlightAll();
           }
