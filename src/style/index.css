@@ -3866,6 +3866,10 @@ select {
   padding: 1rem;
 }
 
+.p-0 {
+  padding: 0px;
+}
+
 .px-3\.5 {
   padding-left: 0.875rem;
   padding-right: 0.875rem;
@@ -3986,6 +3990,10 @@ select {
 
 .pr-10 {
   padding-right: 2.5rem;
+}
+
+.pl-5 {
+  padding-left: 1.25rem;
 }
 
 .pb-5 {

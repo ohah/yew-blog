@@ -58,7 +58,7 @@ pub fn home() -> Html {
 							let row = row.clone();
 							html! {
 								<div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
-									<h2 class="font-bold"> {row.category} </h2>
+									<h2 class="font-bold text-center"> {row.category} </h2>
 									<div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
 								</div>
 							}
