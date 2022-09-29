@@ -10,7 +10,7 @@ pub fn github_login() -> Html {
     "3191d85ec4a4726fb525"
   };
   html! {
-    <div class="flex flex-col dark:bg-slate-800 bg-white dark:shadow-none shadow w-80 pb-10 px-5 rounded-lg space-y-2 modalIn">
+    <div class="flex flex-col dark:bg-slate-800 bg-white dark:shadow-none shadow w-80 pb-10 px-5 rounded-lg space-y-2">
       <h2 class="yg-jalnan py-3 t text-2xl"> {"로그인"} </h2>
       <a href={format!("https://github.com/login/oauth/authorize?client_id={}&scope=user",client_id)}>
         <button class="flex bg-black w-full rounded hover:bg-gray-900 items-center text-slate-400 border-slate-700"> 

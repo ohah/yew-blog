@@ -111,7 +111,7 @@ input:checked ~ .dot {
     display:none;
   }
 }
-.view-prose h1,
+/* .view-prose h1,
 .view-prose h2,
 .view-prose h3,
 .view-prose h4,
@@ -129,4 +129,4 @@ input:checked ~ .dot {
 .dark .view-prose h5,
 .dark .view-prose h6 {
   background:#1e094d;
-}
+} */

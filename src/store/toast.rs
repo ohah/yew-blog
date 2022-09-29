@@ -15,7 +15,6 @@ pub struct ToastMessage {
   pub status: String,
   pub timeout: usize,
   pub key:String,
-  pub show:bool,
 }
 #[derive(Default, Clone, PartialEq, Eq, Store, Properties, Debug)]
 pub struct ToastChildren {
@@ -45,8 +44,7 @@ impl ToastMessage {
       message:message.to_string(),
       status:_status.clone(),
       timeout:timeout,
-      key: key,
-      show:true,
+      key:key,
     }];
     let data = [state.children, temp_data].concat();
     dispatch.set(ToastChildren{ children:data } );
@@ -57,9 +55,8 @@ impl ToastMessage {
     let state = dispatch.get().as_ref().to_owned();
     let mut children = state.clone().children;
     let index = children.clone().iter().position(|x| *x.key == key).unwrap();
-    children[index].show = false;
     dispatch.set(ToastChildren{children: children.clone()});
-    let result = children.clone().iter().enumerate().filter(|&(_, row )| row.clone().show == false ).count();
+    let result = children.clone().iter().enumerate().filter(|&(_, row )| row.clone().key == key ).count();
     if result == state.children.len() {
       dispatch.set(ToastChildren { children: vec![] })
     }
