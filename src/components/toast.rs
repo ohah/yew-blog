@@ -1,47 +1,48 @@
 use yew::prelude::*;
 use yewdux::{prelude::{use_store, Dispatch}};
 use crate::store::toast::{ToastMessage, ToastChildren};
+use crate::components::transition::Transition;
 
 #[function_component(Message)]
-pub fn message(ToastMessage{message,status,timeout,key,show }:&ToastMessage) -> Html {
+pub fn message(ToastMessage{message,status,timeout,key }:&ToastMessage) -> Html {
   let dispatch = Dispatch::<ToastMessage>::new();
-  let timer_id = use_state(|| None);
-  let state = use_state(|| false);
-  let timeout = timeout.clone();
+  let show = use_state(|| true);
   {
-    let timer_id = timer_id.clone();
-    let state = state.clone();
-    let key = key.clone();
-    let dispatch = dispatch.clone();
+    let show = show.clone();
+    let timeout = timeout.clone();
     use_effect_with_deps(move |_| {
-      if *state.clone() == false {
-        state.set(true);
-        let timeout = timeout.clone() as u32;
-        let id = {
-          let timer_id = timer_id.clone();
-          gloo::timers::callback::Timeout::new(timeout, move || {
-            // log::info!("실행");
-            state.set(false);
-            timer_id.set(None);
-            dispatch.get().message_hide(key);
-          })
-          .forget()
-        };
-        timer_id.set(Some(id));
-      }
+      let timeout = timeout.clone() as u32;
+      gloo::timers::callback::Timeout::new(timeout, move || {
+        show.set(false);
+      })
+      .forget();
       || ()
     }, ());
   }
   
-  let hide_class = if *timer_id.clone() == None {
-    Some("toast-hide")
-  } else {
-    None
+  let callback = {
+    let dispatch = dispatch.clone();
+    let key = key.clone();
+    Callback::from(move|value| {
+      dispatch.get().message_hide(key.clone());
+    })
   };
+
   html! {
-    <div class={classes!(hide_class, status, "toast", "p-3", "rounded")}>
-      {format!("{}", message)}
-    </div>    
+    <Transition 
+      show={*show}
+      enter="transition ease-in-out duration-300 transform"
+      enter_from="translate-x-[200%]"
+      enter_to="translate-x-0"
+      leave="transition ease-in-out duration-300 transform"
+      leave_from="translate-x-0"
+      leave_to="translate-x-[200%]"
+      callback={callback}
+    >
+      <div class={classes!(status, "p-3", "rounded")}>
+        {format!("{}", message)}
+      </div>
+    </Transition>
   }
 }
 

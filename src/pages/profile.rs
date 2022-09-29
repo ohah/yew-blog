@@ -364,14 +364,6 @@ pub fn profile() -> Html {
             </KanbanCard>
             <KanbanCard 
               title="미정"
-              description="카테고리, 글쓰기 개선"
-              tag={vec!["Rust", "Wasm"]}
-              epic={TagProps::Bookmark}
-            >
-              <p>{ "글쓰기 인풋박스가 아닌 커스텀 컴포넌트 개발" }</p>
-            </KanbanCard>
-            <KanbanCard 
-              title="미정"
               description="유저 정보"
               tag={vec!["Rust", "Wasm"]}
               epic={TagProps::Bookmark}
@@ -390,6 +382,14 @@ pub fn profile() -> Html {
           </div>
           <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
             <KanbanCard 
+              title="2022.08 ~"
+              description="러스트 SPA 블로그 만들기"
+              tag={vec!["WebAssembly", "javascript", "rust", "php", "typescript"]}
+              epic={TagProps::Complete}
+            >
+              <p>{ "기본적인 CRUD 생성 완료" }</p>
+            </KanbanCard>
+            <KanbanCard 
               title="2022.09.10 ~"
               description="댓글 추가 개발"
               tag={vec!["Rust", "Wasm"]}
@@ -401,12 +401,14 @@ pub fn profile() -> Html {
           </div>
           <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
             <KanbanCard 
-              title="2022.08 ~"
-              description="러스트 SPA 블로그 만들기"
-              tag={vec!["WebAssembly", "javascript", "rust", "php", "typescript"]}
-              epic={TagProps::Complete}
+              title="2022.09.17 ~ 2022.09.19"
+              description="카테고리, 글쓰기 개선, 에디터 일부 버그 수정"
+              tag={vec!["Rust", "Wasm"]}
+              epic={TagProps::Bookmark}
             >
-              <p>{ "기본적인 CRUD 생성 완료" }</p>
+              <p>{ "글쓰기 인풋박스가 아닌 커스텀 컴포넌트 개발" }</p>
+              <p>{ "태그입력, 카테고리 커스텀 컴포넌트 개발" }</p>
+              <p>{ "최초 접속시 에디터 에러 버그 수정" }</p>
             </KanbanCard>
             <KanbanCard 
               title="2022.09.10 ~"
