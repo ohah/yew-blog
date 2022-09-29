@@ -87,9 +87,9 @@ pub fn tag_input(TagInputProps { default_value, onchange }: &TagInputProps) -> H
 			let key = key.as_str();
 			let tag = tag.clone();
 			// log::info!("{:?}", key.clone());
-			if  key == "Backspace" && value.clone().is_empty() {
+			let mut vec = tag.to_vec();
+			if  key == "Backspace" && value.clone().is_empty() && vec.len() > 0 {
 				e.prevent_default();
-				let mut vec = tag.to_vec();
 				vec.remove(vec.len() - 1);
 				let set_vec = vec.clone().into_iter().unique().collect::<Vec<String>>();
 				tag.set(set_vec);
@@ -99,7 +99,7 @@ pub fn tag_input(TagInputProps { default_value, onchange }: &TagInputProps) -> H
 				e.prevent_default();
 				if tag.len() >= 5 {
 					Blog::toast_message("태그는 5개 이상 등록할 수 없습니다", ToastStatus::DANGER, None);
-				} else {
+				} else if !value.clone().as_str().trim().is_empty() {
 					let mut vec = tag.clone().to_vec();
 					vec.push(value.replace(",", "").trim().to_string());
 					vec.dedup_by(|a, b| a == b);
