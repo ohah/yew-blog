@@ -167,16 +167,16 @@ pub fn profile() -> Html {
         title="작업물"
       >        
         <div class="grid md:grid-cols-3 gap-x-4 overlfow-x-auto md:overflow-x-hidden overflow-x-scroll scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300 snap-x relative">
-          <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
-            <h2 class="font-bold text-center"> {"할 일"} </h2>
+          <div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"할 일"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
-            <h2 class="font-bold text-center"> {"진행 중"} </h2>
+          <div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"진행 중"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
-            <h2 class="font-bold text-center"> {"완료"} </h2>
+          <div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"완료"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
           <div class="flex items-center w-full py-3 col-span-3 space-x-2 sticky left-0">
@@ -316,15 +316,15 @@ pub fn profile() -> Html {
       >        
         <div class="grid md:grid-cols-3 gap-x-4 overlfow-x-auto md:overflow-x-hidden overflow-x-scroll scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300 snap-x">
           <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
-            <h2 class="font-bold text-center"> {"할 일"} </h2>
+            <h2 class="font-bold text-center md:text-left"> {"할 일"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
           <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
-            <h2 class="font-bold text-center"> {"진행 중"} </h2>
+            <h2 class="font-bold text-center md:text-left"> {"진행 중"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
           <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
-            <h2 class="font-bold text-center"> {"완료"} </h2>
+            <h2 class="font-bold text-center md:text-left"> {"완료"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
           <div class="flex items-center w-full py-3 col-span-3 space-x-2 sticky left-0">

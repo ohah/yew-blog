@@ -5008,6 +5008,10 @@ select {
     padding-right: 0px;
   }
 
+  .md\:text-left {
+    text-align: left;
+  }
+
   .md\:text-\[100px\] {
     font-size: 100px;
   }
