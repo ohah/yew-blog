@@ -21,7 +21,7 @@ fn app() -> Html {
 			<BrowserRouter>
 				<div class="z-10 dark:bg-gradient-to-r from-[#1a0540] to-[#200a51] text-slate-500 dark:text-slate-400 min-h-screen w-full">
 					<Header />
-					<article class="w-full lg:max-w-screen-lg mx-auto">
+					<article class="lg:w-full lg:max-w-screen-lg md:mx-auto w-auto md:px-0 px-3.5 md:px-0 overflow-x-hidden">
 						<Switch<RootRoute> render={Switch::render(root_switch)} />
 					</article>
 					<div class="absolute -z-10 w-full h-full top-0 left-0 flex justify-between items-center space-x-5 md:space-x-8 lg:space-x-14">

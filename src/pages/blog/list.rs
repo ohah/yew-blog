@@ -102,7 +102,7 @@ pub fn list(ListProps{ page }:&ListProps) -> Html {
       <Card 
         title="목록"
         >
-        <div class="grid grid-cols-3 gap-x-4">
+        <div class="grid md:grid-cols-3 md:gap-x-4 grid-cols-1">
           <div class="bg-gray-100 dark:bg-slate-700 min-h-[220px] rounded">
             { 
               for lists.data.iter().enumerate().filter(|&(i, _)| i % 3 == 0 ).map(|(i, row)| {

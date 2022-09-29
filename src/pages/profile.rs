@@ -166,24 +166,26 @@ pub fn profile() -> Html {
       <Card 
         title="작업물"
       >        
-        <div class="grid grid-cols-3 gap-x-4">
-          <div class="space-y-2"> 
-            <h2> {"할 일"} </h2>
+        <div class="grid md:grid-cols-3 gap-x-4 overlfow-x-auto md:overflow-x-hidden overflow-x-scroll scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300 snap-x relative">
+          <div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"할 일"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="space-y-2"> 
-            <h2> {"진행 중"} </h2>
+          <div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"진행 중"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="space-y-2"> 
-            <h2> {"완료"} </h2>
+          <div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"완료"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="flex items-center w-full py-3 col-span-3 space-x-2">
-            <button class="text-xl w-5 h-5 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded dark:bg-slate-700 dark:hover:bg-slate-800 ease-in-out duration-200"><i class="ri-arrow-down-s-fill"></i></button>
-            <span> {"Ohah"} </span>
+          <div class="flex items-center w-full py-3 col-span-3 space-x-2 sticky left-0">
+            <div class="sticky left-0 space-x-2 flex items-center">
+              <button class="text-xl w-5 h-5 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded dark:bg-slate-700 dark:hover:bg-slate-800 ease-in-out duration-200"><i class="ri-arrow-down-s-fill"></i></button>
+              <span> {"Ohah"} </span>
+            </div>
           </div>
-          <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+          <div class="bg-gray-100 dark:bg-slate-700 md:min-h-[300px] rounded overflow-y-scroll md:max-h-[700px] max-h-[450px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
             <KanbanCard 
               title="2022.08 ~"
               description="React 강의 영상 준비"
@@ -192,7 +194,7 @@ pub fn profile() -> Html {
             >
             </KanbanCard>
           </div>
-          <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+          <div class="bg-gray-100 dark:bg-slate-700 md:min-h-[300px] rounded overflow-y-auto md:max-h-[700px] max-h-[450px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
             <KanbanCard 
               title="2021.07 ~"
               description="hwpjs(hwpx) 만들기"
@@ -203,7 +205,7 @@ pub fn profile() -> Html {
               <p> <a href="https://github.com/ohah/hwpjs" target="_blank"> <i class="text-2xl hover:text-slate-700 dark:hover:text-slate-200 ri-github-fill"> </i> </a> </p>
             </KanbanCard>
           </div>
-          <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+          <div class="bg-gray-100 dark:bg-slate-700 md:min-h-[300px] rounded overflow-y-auto md:max-h-[700px] max-h-[450px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
             <KanbanCard 
               title="2022.04 ~ 2022.05"
               description="호텔리조트 홈페이지 개발"
@@ -312,24 +314,26 @@ pub fn profile() -> Html {
       <Card 
         title="홈페이지 패치 내역"
       >        
-        <div class="grid grid-cols-3 gap-x-4">
-          <div class="space-y-2"> 
-            <h2> {"할 일"} </h2>
+        <div class="grid md:grid-cols-3 gap-x-4 overlfow-x-auto md:overflow-x-hidden overflow-x-scroll scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300 snap-x">
+          <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"할 일"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="space-y-2"> 
-            <h2> {"진행 중"} </h2>
+          <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"진행 중"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="space-y-2"> 
-            <h2> {"완료"} </h2>
+          <div class="space-y-2 w-[92.5vw] snap-x snap-center"> 
+            <h2 class="font-bold text-center md:text-left"> {"완료"} </h2>
             <div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
           </div>
-          <div class="flex items-center w-full py-3 col-span-3 space-x-2">
-            <button class="text-xl w-5 h-5 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded dark:bg-slate-700 dark:hover:bg-slate-800 ease-in-out duration-200"><i class="ri-arrow-down-s-fill"></i></button>
-            <span> {"Ohah"} </span>
+          <div class="flex items-center w-full py-3 col-span-3 space-x-2 sticky left-0">
+            <div class="sticky left-0 space-x-2 flex items-center">
+              <button class="text-xl w-5 h-5 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded dark:bg-slate-700 dark:hover:bg-slate-800 ease-in-out duration-200"><i class="ri-arrow-down-s-fill"></i></button>
+              <span> {"Ohah"} </span>
+            </div>
           </div>
-          <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+          <div class="bg-gray-100 dark:bg-slate-700 md:min-h-[300px] rounded overflow-y-auto md:max-h-[700px] max-h-[450px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
             <KanbanCard 
               title="2022.09.17 ~"
               description="글쓰기 에디터 버그"
@@ -340,27 +344,11 @@ pub fn profile() -> Html {
             </KanbanCard>
             <KanbanCard 
               title="미정"
-              description="모바일 반응형 개발"
-              tag={vec!["Rust", "Wasm", "typescript"]}
-              epic={TagProps::Bookmark}
-            >
-              <p>{ "Tailwind 기반이므로 금방 작업이 될 것으로 예상" }</p>
-            </KanbanCard>
-            <KanbanCard 
-              title="미정"
               description="Toast 메시지 버그 수정"
               tag={vec!["Rust", "Wasm"]}
               epic={TagProps::Bug}
             >
               <p>{ "Tailwind 기반이므로 금방 작업이 될 것으로 예상" }</p>
-            </KanbanCard>
-            <KanbanCard 
-              title="미정"
-              description="검색 기능 추가"
-              tag={vec!["Rust", "Wasm"]}
-              epic={TagProps::Bookmark}
-            >
-              <p>{ "검색 컴포넌트 (헤더, 목록) 추가" }</p>
             </KanbanCard>
             <KanbanCard 
               title="미정"
@@ -380,7 +368,23 @@ pub fn profile() -> Html {
              <p> {"글 좋아요, 이모지 추가"} </p>
             </KanbanCard>
           </div>
-          <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+          <div class="bg-gray-100 dark:bg-slate-700 md:min-h-[300px] rounded overflow-y-auto md:max-h-[700px] max-h-[450px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+            <KanbanCard 
+              title="2022.09.30 ~"
+              description="모바일 반응형 개발"
+              tag={vec!["Rust", "Wasm", "typescript"]}
+              epic={TagProps::Bookmark}
+            >
+              <p>{ "Tailwind 기반이므로 금방 작업이 될 것으로 예상" }</p>
+            </KanbanCard>
+            <KanbanCard 
+              title="2022.09.22 ~"
+              description="검색 기능 추가"
+              tag={vec!["Rust", "Wasm"]}
+              epic={TagProps::Bookmark}
+            >
+              <p>{ "검색 컴포넌트 (헤더, 목록) 추가" }</p>
+            </KanbanCard>
             <KanbanCard 
               title="2022.08 ~"
               description="러스트 SPA 블로그 만들기"
@@ -399,7 +403,7 @@ pub fn profile() -> Html {
              <p> {"댓글 좋아요, 이모지 추가"} </p>
             </KanbanCard>
           </div>
-          <div class="bg-gray-100 dark:bg-slate-700 min-h-[300px] rounded overflow-y-auto max-h-[700px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
+          <div class="bg-gray-100 dark:bg-slate-700 md:min-h-[300px] rounded overflow-y-auto md:max-h-[700px] max-h-[450px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
             <KanbanCard 
               title="2022.09.17 ~ 2022.09.19"
               description="카테고리, 글쓰기 개선, 에디터 일부 버그 수정"

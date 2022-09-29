@@ -2446,17 +2446,16 @@ select {
   grid-column: span 3 / span 3;
 }
 
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
 .float-left {
   float: left;
 }
 
 .m-auto {
   margin: auto;
-}
-
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .my-2 {
@@ -2472,6 +2471,21 @@ select {
 .-mx-4 {
   margin-left: -1rem;
   margin-right: -1rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.mx-7 {
+  margin-left: 1.75rem;
+  margin-right: 1.75rem;
 }
 
 .mx-0 {
@@ -2716,12 +2730,8 @@ select {
   height: 0.25rem;
 }
 
-.max-h-\[630px\] {
-  max-height: 630px;
-}
-
-.max-h-\[700px\] {
-  max-height: 700px;
+.max-h-\[450px\] {
+  max-height: 450px;
 }
 
 .max-h-32 {
@@ -2736,10 +2746,6 @@ select {
   min-height: 200px;
 }
 
-.min-h-\[300px\] {
-  min-height: 300px;
-}
-
 .min-h-full {
   min-height: 100%;
 }
@@ -2750,6 +2756,10 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-auto {
+  width: auto;
 }
 
 .w-1\/3 {
@@ -2792,8 +2802,8 @@ select {
   width: 2.5rem;
 }
 
-.w-auto {
-  width: auto;
+.w-\[92\.5vw\] {
+  width: 92.5vw;
 }
 
 .w-1 {
@@ -2854,6 +2864,10 @@ select {
 
 .max-w-screen-lg {
   max-width: 1024px;
+}
+
+.max-w-full {
+  max-width: 100%;
 }
 
 .flex-none {
@@ -2995,10 +3009,26 @@ select {
   resize: both;
 }
 
+.snap-x {
+  scroll-snap-type: x var(--tw-scroll-snap-strictness);
+}
+
+.snap-center {
+  scroll-snap-align: center;
+}
+
+.snap-normal {
+  scroll-snap-stop: normal;
+}
+
 .appearance-none {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .grid-cols-3 {
@@ -3217,6 +3247,14 @@ select {
 
 .overflow-y-hidden {
   overflow-y: hidden;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 
 .text-ellipsis {
@@ -3828,6 +3866,20 @@ select {
   padding: 1rem;
 }
 
+.p-0 {
+  padding: 0px;
+}
+
+.px-3\.5 {
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -3841,11 +3893,6 @@ select {
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-}
-
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
 }
 
 .px-4 {
@@ -3888,11 +3935,6 @@ select {
   padding-bottom: 0.625rem;
 }
 
-.px-3\.5 {
-  padding-left: 0.875rem;
-  padding-right: 0.875rem;
-}
-
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -3911,6 +3953,11 @@ select {
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .pt-4 {
@@ -3943,6 +3990,10 @@ select {
 
 .pr-10 {
   padding-right: 2.5rem;
+}
+
+.pl-5 {
+  padding-left: 1.25rem;
 }
 
 .pb-5 {
@@ -4902,24 +4953,83 @@ select {
 }
 
 @media (min-width: 640px) {
+  .sm\:block {
+    display: block;
+  }
+
+  .sm\:justify-between {
+    justify-content: space-between;
+  }
+
   .sm\:text-\[80px\] {
     font-size: 80px;
   }
 }
 
 @media (min-width: 768px) {
+  .md\:mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .md\:max-h-\[700px\] {
+    max-height: 700px;
+  }
+
+  .md\:min-h-\[300px\] {
+    min-height: 300px;
+  }
+
+  .md\:w-auto {
+    width: auto;
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:gap-x-4 {
+    -moz-column-gap: 1rem;
+         column-gap: 1rem;
+  }
+
   .md\:space-x-8 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
     margin-right: calc(2rem * var(--tw-space-x-reverse));
     margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
+  .md\:overflow-x-hidden {
+    overflow-x: hidden;
+  }
+
+  .md\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .md\:text-left {
+    text-align: left;
+  }
+
   .md\:text-\[100px\] {
     font-size: 100px;
+  }
+
+  .scrollbar.md\:overflow-x-hidden {
+    overflow-x: hidden;
+  }
+
+  .scrollbar-thin.md\:overflow-x-hidden {
+    overflow-x: hidden;
   }
 }
 
 @media (min-width: 1024px) {
+  .lg\:w-full {
+    width: 100%;
+  }
+
   .lg\:max-w-screen-lg {
     max-width: 1024px;
   }

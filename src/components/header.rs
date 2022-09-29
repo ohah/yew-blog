@@ -150,13 +150,13 @@ pub fn header() -> Html {
   };
 	html! {
     <header class="dark:bg-gradient-to-r from-[#1a0540] to-[#200a51] bg-white h-[60px] flex items-center border-b shadow-b dark:border-slate-500/60 sticky top-0 left-0 z-[9999]">
-      <div class="flex justify-between align-center w-full lg:max-w-screen-lg m-auto items-center">
+      <div class="flex justify-end sm:justify-between align-center w-full lg:max-w-screen-lg m-auto items-center">
       // <form
       //   onsubmit={onsubmit}
       // >
       //   <div> {"대체 뭐냐잉"} </div>
       // </form>
-        <div class="px-2 group">
+        <div class="px-2 group sm:block hidden">
           <Link<RootRoute> to={RootRoute::Home}>
             <p class="yg-jalnan text-xl group-hover:scale-110 block ease-in-out duration-200 group-hover:text-slate-700 dark:group-hover:text-slate-100 ">{ "Ohah" } </p>
             <p class="text-[3px] group-hover:text-slate-700 dark:group-hover:text-slate-100"> {"개발자의 주절주절"} </p>

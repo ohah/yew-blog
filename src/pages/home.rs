@@ -52,27 +52,29 @@ pub fn home() -> Html {
       <Card 
         title="최신글"
       >
-        <div class="grid grid-cols-3 gap-x-4">
+        <div class="grid md:grid-cols-3 gap-x-4 overlfow-x-auto md:overflow-x-hidden overflow-x-scroll scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300 snap-x relative">
 					{ 
 						for lists.iter().enumerate().map(|(i, row)| {
 							let row = row.clone();
 							html! {
-								<div key={i} class="space-y-2"> 
-									<h2 class="font-bold"> {row.category} </h2>
+								<div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
+									<h2 class="font-bold md:text-left text-center"> {row.category} </h2>
 									<div class="w-full bg-gray-100 rounded-full h-2 dark:bg-gray-700"></div>
 								</div>
 							}
 						})
 					}
           <div class="flex items-center w-full py-3 col-span-3 space-x-2">
-            <button class="text-xl w-5 h-5 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded dark:bg-slate-700 dark:hover:bg-slate-800 ease-in-out duration-200 "><i class="ri-arrow-down-s-fill"></i></button>
-            <span> {format!("{}개의 인기 있는 카테고리", lists.len())} </span>
+						<div class="sticky left-0 space-x-2 flex items-center">
+							<button class="text-xl w-5 h-5 inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded dark:bg-slate-700 dark:hover:bg-slate-800 ease-in-out duration-200 "><i class="ri-arrow-down-s-fill"></i></button>
+							<span> {format!("{}개의 인기 있는 카테고리", lists.len())} </span>
+						</div>
           </div>
 					{ 
 						for lists.iter().enumerate().map(|(i, row)| {
 							let row = row.clone();
 							html! {
-								<div key={i} class="bg-gray-100 dark:bg-slate-700 min-h-[300px] max-h-[630px] overflow-y-auto rounded scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800">
+								<div class="bg-gray-100 dark:bg-slate-700 md:min-h-[300px] rounded overflow-y-scroll md:max-h-[700px] max-h-[450px] scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300">
 									{
 										for row.list.iter().enumerate().map(|(k, data)| {
 											let data = data.clone();
