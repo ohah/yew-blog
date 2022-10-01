@@ -18,3 +18,4 @@ pub mod tag_input;
 pub mod category_input;
 pub mod dropdown;
 pub mod transition;
+pub mod dialog;

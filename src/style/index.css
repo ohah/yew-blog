@@ -2686,16 +2686,16 @@ select {
   height: 7rem;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .h-10 {
   height: 2.5rem;
 }
 
 .h-\[60px\] {
   height: 60px;
-}
-
-.h-screen {
-  height: 100vh;
 }
 
 .h-2 {
