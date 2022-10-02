@@ -199,6 +199,16 @@ impl Blog {
 		}
 	}
 
+	pub fn get_id() -> String {
+		let dispatch = Dispatch::<GithubUser>::new();	
+		let id = &dispatch.get().id.to_string();
+		if id.clone().is_empty() {
+			"".to_string()
+		} else {
+			format!("Bearer {}", id.clone())
+		}
+	}
+
 	pub fn toast_message(message:&str, status:ToastStatus, timeout:Option<usize>) {
 		let toast = Dispatch::<ToastMessage>::new();
 		toast.get().message(message, status, timeout);

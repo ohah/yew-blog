@@ -38,6 +38,7 @@ pub fn message(ToastMessage{message,status,timeout,key }:&ToastMessage) -> Html 
       leave_from="translate-x-0"
       leave_to="translate-x-[200%]"
       callback={callback}
+      class="z-[100000]"
     >
       <div class={classes!(status, "p-3", "rounded")}>
         {format!("{}", message)}
@@ -50,7 +51,7 @@ pub fn message(ToastMessage{message,status,timeout,key }:&ToastMessage) -> Html 
 pub fn toast() -> Html {
   let (state, _) = use_store::<ToastChildren>();
   html! {
-    <div class={classes!("fixed", "bottom-10", "right-5", "space-y-5", "z-[3000]", "text-white")}>
+    <div class={classes!("fixed", "bottom-10", "right-5", "space-y-5", "z-[10000000]", "text-white")}>
       { for state.children.iter().enumerate().map(|(i, row)| {
         let row = row.clone();
         html! {

@@ -1,8 +1,12 @@
-use yew::{ function_component, html };
+use web_sys::MouseEvent;
+use yew::{ function_component, html, use_state, Callback };
 use crate::components::card;
 use crate::components::work_state::TagProps;
 use card::Card;
 use crate::components::kanban_card;
+use crate::components::modal::Modal;
+use crate::components::transition::Transition;
+use crate::components::profile_update::ProfileUpdate;
 use kanban_card::KanbanCard;
 
 #[function_component(Profile)]
@@ -165,7 +169,8 @@ pub fn profile() -> Html {
       // </Card>
       <Card 
         title="작업물"
-      >        
+      >
+        <ProfileUpdate />
         <div class="grid md:grid-cols-3 gap-x-4 overlfow-x-auto md:overflow-x-hidden overflow-x-scroll scrollbar-thin dark:scrollbar-thumb-gray-900 dark:scrollbar-track-gray-800 scrollbar-thumb-gray-400 scrollbar-track-gray-300 snap-x relative">
           <div class="space-y-2 md:w-auto w-[92.5vw] snap-x snap-center"> 
             <h2 class="font-bold text-center md:text-left"> {"할 일"} </h2>
