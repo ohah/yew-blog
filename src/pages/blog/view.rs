@@ -1,5 +1,6 @@
 use web_sys::{Element, MouseEvent};
 use gloo_net::http::Request;
+use gloo_utils::document;
 use wasm_bindgen::prelude::{wasm_bindgen};
 use yew::{ function_component, html, Properties, use_state, use_effect_with_deps,use_node_ref, Html, Callback };
 use comrak::{markdown_to_html, ComrakOptions, plugins::syntect::SyntectAdapter, markdown_to_html_with_plugins, ComrakPlugins};
@@ -8,7 +9,6 @@ use crate::{components::list_card::Datas, store::{toast::{ToastStatus}, github_a
 use crate::{router::root::{WriteRoute}};
 use yew_router::{components::Link, prelude::{use_history,use_route}};
 use crate::components::modal::Modal;
-
 #[wasm_bindgen(module = "/src/vscode/highlight.js")]
 extern "C" {
   fn highlightAll();
@@ -42,6 +42,7 @@ pub fn view(ViewProps{ seo_title }:&ViewProps) -> Html {
         match fetched_list {
           Ok(fetched_list) => {
             views.set(fetched_list.clone());
+            document().set_title(fetched_list.clone().seo_title.as_str());
             let render = render.cast::<Element>().expect("render을 가져오지 못함");
             let mut options = ComrakOptions::default();
             options.extension.superscript = true;

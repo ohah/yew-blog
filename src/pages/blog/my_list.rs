@@ -23,6 +23,7 @@ pub struct MyListProps {
 #[function_component(MyList)]
 pub fn my_list(MyListProps{ page }:&MyListProps) -> Html {
   let lists = use_state(||MyListResponse::default());
+  gloo_utils::document().set_title("Ohah의 블로그");
   {
     let lists = lists.clone();
     let url = format!("/api/profile/list/{}", page.clone());
