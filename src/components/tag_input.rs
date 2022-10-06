@@ -95,8 +95,10 @@ pub fn tag_input(TagInputProps { default_value, onchange }: &TagInputProps) -> H
 				tag.set(set_vec);
 				let emit = vec.clone().into_iter().unique().collect::<Vec<String>>().join(",");
 				handle_onchange.emit(emit);
-			} else if key == " " || key == "," || key == "Enter" {
-				e.prevent_default();
+			} else if key == " " || key == "," || key == "Enter" || key == "Tab" {
+				if key != "Tab" {
+					e.prevent_default();
+				}
 				if tag.len() >= 5 {
 					Blog::toast_message("태그는 5개 이상 등록할 수 없습니다", ToastStatus::DANGER, None);
 				} else if !value.clone().as_str().trim().is_empty() {
@@ -115,8 +117,10 @@ pub fn tag_input(TagInputProps { default_value, onchange }: &TagInputProps) -> H
 
 	let input_onchange = {
 		let handle_onchange = onchange.clone();
-		Callback::from(move | event: Event | {
-			let value = event.target().unwrap().unchecked_into::<HtmlInputElement>().value();
+		Callback::from(move | e: Event | {
+			let input = e.target().unwrap().unchecked_into::<HtmlInputElement>();
+			let value = input.clone().value();
+			// input.clone().set_value("");
 			handle_onchange.emit(value);
 		})
 	};
@@ -149,7 +153,7 @@ pub fn tag_input(TagInputProps { default_value, onchange }: &TagInputProps) -> H
 	let tag = tag.clone().to_vec();
 	html! {
 		<div 
-			class="flex font-sans text-sm py-2 px-3 items-center w-full gap-x-1 dark:bg-slate-800 dark:ring-0 dark:highlight-white/5 dark:text-slate-400 text-slate-500"
+			class="flex font-sans text-sm py-2 px-3 items-center rounded w-full gap-x-1 dark:bg-slate-800 dark:border-[#6b7280] border group focus:border-[##2563eb] group-focus:border-[##2563eb] dark:highlight-white/5 dark:text-slate-400 text-slate-500 mx-px"
 		>
 			<Tag
 				list={tag.clone().to_vec()}
