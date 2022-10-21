@@ -186,7 +186,7 @@ pub fn profile_update(ProfileUpadteProps { position, id, value }:&ProfileUpadteP
   html!(
     <div> 
       <button 
-        class={format!("add-profile absolute {} h-[35px] px-2 inline-flex items-center justify-center text-xs rounded hover:bg-black hover:bg-opacity-75 z-[9999]", position)}
+        class={format!("add-profile absolute {} h-[35px] px-2 inline-flex items-center justify-center text-xs rounded hover-bg-gray-200 dark:hover:bg-black hover:bg-opacity-75 z-[9999]", position)}
         type="button"
         onclick={toggle_modal.clone()}
       > 

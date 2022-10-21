@@ -115,7 +115,6 @@ pub fn header() -> Html {
             }
           }
         };
-        log::info!("이벤트 {:?}", query_string);
         let input = search_input.cast::<HtmlInputElement>();
         query.set(query_string.clone());
         match input {
@@ -154,23 +153,14 @@ pub fn header() -> Html {
   };
 	html! {
     <header class="dark:bg-gradient-to-r from-[#1a0540] to-[#200a51] bg-white h-[60px] flex items-center border-b shadow-b dark:border-slate-500/60 sticky top-0 left-0 z-[9999]">
-      <div class="flex justify-end sm:justify-between align-center w-full lg:max-w-screen-lg m-auto items-center">
-      
-      // <Dialog<DialogType::Panel>>
-      //   <div> {"무야호"} </div>
-      // </Dialog<DialogType::Panel>>
-      // <form
-      //   onsubmit={onsubmit}
-      // >
-      //   <div> {"대체 뭐냐잉"} </div>
-      // </form>
-        <div class="px-2 group sm:block hidden">
+      <div class="flex justify-between align-center w-full lg:max-w-screen-lg m-auto items-center">
+        <div class="px-2 group">
           <Link<RootRoute> to={RootRoute::Home}>
-            <p class="yg-jalnan text-xl group-hover:scale-110 block ease-in-out duration-200 group-hover:text-slate-700 dark:group-hover:text-slate-100 ">{ "Ohah" } </p>
-            <p class="text-[3px] group-hover:text-slate-700 dark:group-hover:text-slate-100"> {"개발자의 주절주절"} </p>
+            <p class="yg-jalnan sm:text-xl text-sm group-hover:scale-110 block ease-in-out duration-200 group-hover:text-slate-700 dark:group-hover:text-slate-100 ">{ "Ohah" } </p>
+            <p class="text-[3px] sm:block hidden group-hover:text-slate-700 dark:group-hover:text-slate-100"> {"개발자의 주절주절"} </p>
           </Link<RootRoute>>
         </div>
-        <div class="flex items-center pr-3 S-CoreDream-4Regular"> 
+        <div class="flex items-center pr-3 S-CoreDream-4Regular sm:text-base text-sm"> 
           <ul class="flex items-center divide-x-2 dark:divide-slate-500/60 font-bold">            
             <li class={classes!("px-3", HOVER_CSS)}>
               <span class="hover:scale-110 block ease-in-out duration-200"><Link<RootRoute> to={RootRoute::Profile}>{ "프로필" }</Link<RootRoute>></span>
@@ -182,7 +172,7 @@ pub fn header() -> Html {
           <div class="flex items-center justify-center">
             if user_state.clone().name == "" {
             <button
-              class="text-2xl group px-2"
+              class="sm:text-2xl text-sm group px-2"
               onclick={toggle_login_modal.clone()}
             >
               <i class="hover:text-slate-700 dark:hover:text-slate-200 ri-login-box-line"></i>
@@ -193,7 +183,7 @@ pub fn header() -> Html {
                   button={
                     let user_state = user_state.clone();
                     let html = html!{
-                      <button class="text-2xl group w-6 h-6">
+                      <button class="sm:text-2xl text-sm group w-6 h-6">
                         <img 
                           class="w-full h-full rounded-full"
                           src={format!("{}", user_state.avatar_url)} 

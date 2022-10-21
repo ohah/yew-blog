@@ -51,7 +51,7 @@ impl Component for Card {
 
 	fn view(&self, ctx: &Context<Self>) -> Html {
 		const DEFAULT: &str =
-			"card px-2 py-4 shadow rounded-[6px] my-2 dark:border-[#100322] border dark:bg-neutral-800 relative border-b-[#b4b4b4] border-r-[#b4b4b4] border-l-[#b4b4b4] overflow-hidden";
+			"card px-2 py-4 shadow rounded-[6px] my-2 dark:border-[#100322] border dark:bg-neutral-800 relative border-b-[#b4b4b4] border-r-[#b4b4b4] border-l-[#b4b4b4] overflow-hidden bg-white";
 		let minimize = ctx.link().callback(|_| CardMsg::Minimize);
 		let maximize = ctx.link().callback(|_| CardMsg::Maximize);
 
