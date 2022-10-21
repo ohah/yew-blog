@@ -106,7 +106,7 @@ pub fn wrtie( WriteProps { id }:&WriteProps) -> Html {
     };
     let url = format!("/api/write/{}", id.clone());
     let payload = payload.clone();
-    use_effect_with_deps(move |_| {      
+    use_effect_with_deps(move |_| {
       if id > 0 { // 여기 문제
         wasm_bindgen_futures::spawn_local(async move {
           let fetched_list  = Request::get(url.as_str())

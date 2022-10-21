@@ -17,6 +17,7 @@ pub struct Latest {
 #[function_component(Home)]
 pub fn home() -> Html {
 	let lists = use_state(||vec![Latest::default()]);
+	gloo_utils::document().set_title("Ohah의 블로그");
 	{
 		let lists = lists.clone();
 		use_effect_with_deps(move |_| {

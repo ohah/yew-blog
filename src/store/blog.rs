@@ -1,5 +1,7 @@
 use gloo_net::{http::{Request}};
 use serde::{ Serialize, Deserialize};
+use web_sys::MouseEvent;
+use yew::{Callback, UseStateHandle};
 use yew_router::prelude::{AnyHistory, History};
 use yewdux::{prelude::Dispatch, store::Store};
 
@@ -42,6 +44,21 @@ pub struct ResponseCode {
 	pub seo_title:Option<String>,
 }
 
+#[derive(Default, Clone, Debug, Serialize, Deserialize)]
+pub struct ProfilePayload {
+	pub category:String,
+	pub id:Option<usize>,
+	#[serde(rename="frDate")]
+  pub fr_date:String,
+	#[serde(rename="laDate")]
+  pub la_date:String,
+  pub tag:String,
+  pub label:String,
+  pub description:String,
+  pub state:String,
+}
+
+
 impl Blog {
 	pub fn write(payload:WritePayload, history:AnyHistory, route:RootRoute) {
 		let token = Blog::get_token();
@@ -75,6 +92,44 @@ impl Blog {
 								log::error!("{:?}", "주소가 리턴되지 않았습니다")
 							}
 						}
+					}
+					Err(err) => {
+						log::error!("{:?}", err);
+						Blog::toast_message("알 수 없는 오류가 발생헀습니다.", ToastStatus::DANGER, None);
+					}
+				};
+			});
+		}
+	}
+
+	pub fn profile_write(payload:ProfilePayload, is_modal:UseStateHandle<bool>, history:AnyHistory, route:RootRoute) {
+		let token = Blog::get_token();
+		if token.is_empty() {
+			Blog::toast_message("정상적인 로그인 상태가 아닙니다", ToastStatus::DANGER, None);
+		} else { 
+			wasm_bindgen_futures::spawn_local(async move {
+				let response = Request::post("/api/profile_write")
+				.header("Authorization", token.as_str())
+				.header("accept", "applcation/json")
+				.header("Access-Control-Allow-Origin", "no-cors")
+				.json(&payload)
+				.expect("전송 오류")
+				.send()
+				.await
+				.unwrap()
+				.json::<ResponseCode>()
+				.await;
+				match response {
+					Ok(response) => {
+						let status = match response.success {
+							true => ToastStatus::SUCCESS,
+							false => ToastStatus::DANGER,
+						};
+						if status ==ToastStatus::SUCCESS {
+							is_modal.set(false);
+						}
+						Blog::toast_message(response.message.as_str(), status, None);
+						history.push(RootRoute::Profile );
 					}
 					Err(err) => {
 						log::error!("{:?}", err);
@@ -196,6 +251,24 @@ impl Blog {
 			"".to_string()
 		} else {
 			format!("Bearer {}", access_token.clone())
+		}
+	}
+
+	pub fn get_id() -> String {
+		let dispatch = Dispatch::<GithubUser>::new();	
+		let id = &dispatch.get().id.to_string();
+		if id.clone().is_empty() {
+			"".to_string()
+		} else {
+			id.clone()
+		}
+	}
+
+	pub fn is_admin() -> bool {
+		if Blog::get_id().as_str() == "16170776" {
+			true
+		} else {
+			false
 		}
 	}
 

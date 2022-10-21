@@ -58,7 +58,7 @@ impl Component for Card {
 		html! {
 			<div class={classes!(Some(&ctx.props().class), DEFAULT)}>
 				<header class="h-[35px] border-b border-t rounded-t-[6px] flex justify-between w-full text-[11pt] absolute top-0 left-0 bg-[#ebebeb] border-[#d8d8d8] border-b-[#b4b4b4] dark:bg-[#1c1b1e] dark:border-[#100322] z-50">
-					<div class="flex items-center space-x-[6px] ml-[6px] group">
+					<div class="flex items-center space-x-[6px] ml-[6px] group absolute top-0 left-0 h-full">
 						<button class="w-[11px] h-[11px] bg-[#ff5c5c] border border-[#e33e41] rounded-full text-[9pt] inline-flex items-center justify-center">
 							<i class="ri-close-fill hidden group-hover:block text-black font-bold"></i>
 						</button>

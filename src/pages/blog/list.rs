@@ -43,6 +43,7 @@ pub fn list(ListProps{ page }:&ListProps) -> Html {
       }
     }
   };
+  gloo_utils::document().set_title("Ohah의 블로그");
   {
     let lists = lists.clone();
     let url = format!("/api/list/{}", page.clone());

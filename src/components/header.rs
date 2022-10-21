@@ -12,6 +12,7 @@ use blog::list::{SearchQuery};
 
 use crate::components::modal;
 use modal::Modal;
+use crate::components::dialog::{Dialog, DialogType};
 
 use crate::components::github_login;
 use github_login::GitHubLogin;
@@ -148,9 +149,16 @@ pub fn header() -> Html {
       }
     })
   };
+  DialogType::Panel {
+    a : 1, b : 3
+  };
 	html! {
     <header class="dark:bg-gradient-to-r from-[#1a0540] to-[#200a51] bg-white h-[60px] flex items-center border-b shadow-b dark:border-slate-500/60 sticky top-0 left-0 z-[9999]">
       <div class="flex justify-end sm:justify-between align-center w-full lg:max-w-screen-lg m-auto items-center">
+      
+      // <Dialog<DialogType::Panel>>
+      //   <div> {"무야호"} </div>
+      // </Dialog<DialogType::Panel>>
       // <form
       //   onsubmit={onsubmit}
       // >
